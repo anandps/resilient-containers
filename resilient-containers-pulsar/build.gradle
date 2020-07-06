@@ -1,0 +1,19 @@
+plugins {
+    id 'java-library'
+}
+apply from: "$rootDir/gradle/publishing.gradle"
+apply from: "$rootDir/gradle/lombok.gradle"
+
+dependencies {
+    implementation platform("org.springframework.boot:spring-boot-dependencies:${springBootVersion}")
+    api platform("org.testcontainers:testcontainers-bom:${testContainerVersion}")
+    implementation('org.springframework.boot:spring-boot-starter-test') {
+        exclude group: 'junit'
+        exclude group: 'org.junit.vintage'
+    }
+    api project(':resilient-containers-core')
+    api 'org.springframework.boot:spring-boot'
+    api 'org.testcontainers:postgresql'
+    api 'org.testcontainers:toxiproxy'
+    api 'org.testcontainers:pulsar'
+}

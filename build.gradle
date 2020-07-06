@@ -1,0 +1,22 @@
+ext {
+    springBootVersion = '2.3.0.RELEASE'
+    testContainerVersion = '1.14.3'
+    pulsarClientVersion = '2.5.2'
+    awaitilityVersion = '4.0.2'
+}
+subprojects {
+    apply plugin: 'java'
+
+    group = 'com.github.anandps.resilient-containers'
+    version = '1.0-SNAPSHOT'
+
+    repositories {
+        mavenCentral()
+        maven { url 'https://repo.spring.io/milestone' }
+    }
+
+    test {
+        useJUnitPlatform()
+    }
+}
+

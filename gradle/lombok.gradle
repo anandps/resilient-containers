@@ -1,0 +1,10 @@
+dependencies {
+    // Use Project Lombok
+    def lombokDependency = 'org.projectlombok:lombok:1.18.12'
+    // required by "lombok.addJavaxGeneratedAnnotation = true" lombok.config setting
+    def javaxAnnotationDependency = 'javax.annotation:javax.annotation-api:1.3.2'
+    compileOnly lombokDependency, javaxAnnotationDependency
+    annotationProcessor lombokDependency
+    testCompileOnly lombokDependency, javaxAnnotationDependency
+    testAnnotationProcessor lombokDependency
+}

@@ -1,0 +1,6 @@
+rootProject.name = 'resilient-containers'
+include 'resilient-containers-core'
+include 'resilient-containers-postgres'
+include 'sample-resilient-app'
+include 'resilient-containers-pulsar'
+
