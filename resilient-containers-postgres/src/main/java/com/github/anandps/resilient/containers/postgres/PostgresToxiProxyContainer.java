@@ -10,6 +10,9 @@ import java.util.List;
 import java.util.Optional;
 import java.util.concurrent.CompletableFuture;
 
+/**
+ * Postgres container with proxy network
+ */
 class PostgresToxiProxyContainer implements ResilientContainer {
     private static final Logger LOG = LoggerFactory.getLogger(PostgresToxiProxyContainer.class);
     public static final String DEFAULT_POSTGRES_VERSION = "11-alpine";
@@ -23,28 +26,24 @@ class PostgresToxiProxyContainer implements ResilientContainer {
 
     public PostgresToxiProxyContainer() {
         // create all the containers using same Network
-        System.out.println(">>inside toxiproxy const");
         this.postgresContainer = createPostgresContainer();
         this.toxiproxyContainer = createToxiProxyContainer();
     }
 
 
     private ToxiproxyContainer createToxiProxyContainer() {
-        System.out.println(">>inside toxiproxy createToxiProxyContainer");
         return new ToxiproxyContainer().withNetwork(SHARED_NETWORK);
     }
 
     protected PostgreSQLContainer<?> createPostgresContainer() {
-        System.out.println(">>inside postgres createPostgresContainer");
         return new PostgreSQLContainer<>("postgres:" + postgresVersion).withNetwork(SHARED_NETWORK);
     }
 
     @Override
     public CompletableFuture<Void> start() {
-        System.out.println(">>inside toxiproxy start");
+        LOG.info("Starting containers.");
         return Startables.deepStart(List.of(postgresContainer, toxiproxyContainer))
                 .thenCompose(__ -> {
-                    System.out.println(">>after start::" + postgresContainer.getJdbcUrl());
                     this.proxy = toxiproxyContainer.getProxy(postgresContainer, PostgreSQLContainer.POSTGRESQL_PORT);
                     return CompletableFuture.completedFuture(null);
                 });

@@ -6,6 +6,10 @@ import org.springframework.core.env.ConfigurableEnvironment;
 
 import java.util.Map;
 
+/**
+ * ProxyContainer for Pulsar to help in simulating network failures while testing the
+ * resilience feature of the application
+ */
 public class PulsarProxyInitializer extends AbstractResilientContainerInitializer {
     private static PulsarToxiProxyContainer pulsarToxiProxyContainer;
 

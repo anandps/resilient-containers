@@ -12,6 +12,9 @@ import java.util.List;
 import java.util.Optional;
 import java.util.concurrent.CompletableFuture;
 
+/**
+ * Pulsar container with proxy network
+ */
 public class PulsarToxiProxyContainer implements ResilientContainer {
     private static final Logger LOG = LoggerFactory.getLogger(PulsarToxiProxyContainer.class);
     private static final String DEFAULT_PULSAR_VERSION = "2.5.2";
@@ -60,6 +63,7 @@ public class PulsarToxiProxyContainer implements ResilientContainer {
 
     @Override
     public CompletableFuture<Void> start() {
+        LOG.info("Starting containers.");
         return Startables.deepStart(List.of(pulsarContainer, toxiproxyContainer))
                 .thenCompose(__ -> {
                     this.proxy = toxiproxyContainer.getProxy(pulsarContainer, PulsarContainer.BROKER_PORT);
